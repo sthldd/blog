@@ -12,11 +12,14 @@
     "axios": "^0.20.0",
     "gray-matter": "^4.0.2",
     "next": "9.5.1",
+    "pg": "^8.3.3",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
-    "@types/node": "^14.0.27",
+    "@types/node": "^14.6.2",
     "@types/react": "^16.9.45",
     "@types/react-dom": "^16.9.8",
     "file-loader": "^6.0.0",
