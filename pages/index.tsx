@@ -8,7 +8,7 @@ export default function Home() {
       <h1>
         Welcome to
       </h1>
-      <img src={png} alt=""/>
+      {/* <img src={png} alt=""/> */}
     </main>
   </div>
   )

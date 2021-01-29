@@ -37,3 +37,4 @@ blog-data
 .idea
 .next
 yarn-error.log
+dist

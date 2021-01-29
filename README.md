@@ -2,6 +2,32 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+
+## 启动数据库
+
+```c
+docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+```
+
+```c
+//docker
+docker kill xxs //杀掉容器进程
+docker rm xxs //删除容器
+
+//数据库
+psql -U xx //进入数据库
+\l //查看所有数据表
+\c xx //查看表
+\dt //查看数据库多少个表
+select * from xxx;//查看表的所有数据
+drop database xxx //删除表
+```
+## 创建数据库
+
+```c
+CREATE DATABASE xxx ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
+```
+
 First, run the development server:
 
 ```bash
