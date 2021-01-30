@@ -3,7 +3,7 @@ import {MigrationInterface, QueryRunner, Table} from "typeorm";
 export class CreateComments1611906468603 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.createTable(new Table({
+        return await queryRunner.createTable(new Table({
             name:'comments',
             columns:[
                 {name:'id',isGenerated:true,type:'int',generationStrategy:'increment',isPrimary:true},
@@ -15,7 +15,7 @@ export class CreateComments1611906468603 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.dropTable('comments')
+        return await queryRunner.dropTable('comments')
     }
 
 }
