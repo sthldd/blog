@@ -11,14 +11,17 @@ docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES
 
 ```c
 //docker
+docker ps -a //查看容器运行状态
+docker log xxx //查看容器启动日志
+docker exec -it xxx bash //进入容器
 docker kill xxs //杀掉容器进程
 docker rm xxs //删除容器
 
 //数据库
 psql -U xx //进入数据库
-\l //查看所有数据表
-\c xx //查看表
-\dt //查看数据库多少个表
+\l //查看所有数据表   list database
+\c xx //查看表 connecnt to a  database
+\dt //查看数据库多少个表 display tables
 select * from xxx;//查看表的所有数据
 drop database xxx //删除表
 ```
