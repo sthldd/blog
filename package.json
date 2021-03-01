@@ -19,6 +19,7 @@
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "9.5.1",
+    "next-iron-session": "^4.1.12",
     "pg": "^8.5.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

@@ -1,10 +1,13 @@
-import {NextPage} from 'next';
+import {GetServerSideProps, NextPage} from 'next';
 import {useCallback, useState} from 'react';
 import axios, {AxiosError, AxiosResponse} from 'axios';
+import { withSession } from 'lib/withSession';
+import { Session } from 'inspector';
+import { User } from '../src/entity/User';
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage<{user:User}> = (props) => {
   const [formData, setFormData] = useState({
-    username: '123',
+    username: '1234',
     password: '567',
     passwordConfirmation: '567'
   });
@@ -13,21 +16,23 @@ const SignUp: NextPage = () => {
   });
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    axios.post(`/api/v1/users`, formData)
+    axios.post(`/api/v1/sessions`, formData)
       .then(() => {
-        window.alert('注册成功')
-        window.location.href = '/sign_in'
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
-            setErrors({...errors, ...response.data});
+            setErrors(response.data);
           }
         }
       });
   }, [formData]);
   return (
     <>
+    {
+      props.user ? <div>
+        当前登陆用户：{props.user.username}
+      </div> : <>
       <h1>登陆</h1>
       <form onSubmit={onSubmit}>
         <div>
@@ -55,24 +60,23 @@ const SignUp: NextPage = () => {
           </div>}
         </div>
         <div>
-          <label>重置密码
-            <input type="password" value={formData.passwordConfirmation}
-              onChange={e => setFormData({
-                ...formData,
-                passwordConfirmation: e.target.value
-              })}
-            />
-          </label>
-          {errors.passwordConfirmation?.length > 0 && <div>
-            {errors.passwordConfirmation.join(',')}
-          </div>}
-        </div>
-        <div>
-          <button type="submit">注册</button>
+          <button type="submit">登陆</button>
         </div>
       </form>
+      </>
+    }
+      
     </>
   );
 };
 
-export default SignUp;
+export default SignIn;
+ //@ts-ignore
+export const getServerSideProps: GetServerSideProps = withSession( async (context) => {
+  const user = context.req.session.get('currentUser') //获取浏览器 application 中的cookie数据 存的时候在登陆存的
+  return {
+    props:{
+      user:JSON.parse(JSON.stringify(user))
+    }
+  }
+})

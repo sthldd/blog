@@ -8,7 +8,7 @@ import _ from 'lodash'
 @Entity('users') //实体关联表
 export class User {
   @PrimaryGeneratedColumn('increment') //主要的被创建的colunm
-  id:number;
+  id:string;
   @Column('varchar')
   username:string;
   @Column('varchar')

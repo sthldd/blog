@@ -21,7 +21,7 @@ const SignUp: NextPage = () => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
-            setErrors({...errors, ...response.data});
+            setErrors(response.data);
           }
         }
       });
@@ -55,7 +55,7 @@ const SignUp: NextPage = () => {
           </div>}
         </div>
         <div>
-          <label>重置密码
+          <label>确认密码
             <input type="password" value={formData.passwordConfirmation}
               onChange={e => setFormData({
                 ...formData,

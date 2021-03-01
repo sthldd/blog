@@ -20,7 +20,6 @@ const promise = (async function(){
   if(current){
     await current.close()
   }
-  console.log(User,'-----');
   return create()
 })()
 

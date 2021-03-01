@@ -5,7 +5,7 @@ import {getDatabaseConnection} from 'lib/getDatabaseConnection';
 
 // unique 可以保证username不重复 但是需要同步数据库功能开启 ormconfig 的 synchronize
 
-const Posts: NextApiHandler = async (req, res) => {
+const Users: NextApiHandler = async (req, res) => {
   let {  username, password, passwordConfirmation} = req.body
   const connection = await getDatabaseConnection()
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -30,4 +30,4 @@ const Posts: NextApiHandler = async (req, res) => {
   }
   res.end();
 };
-export default Posts;
+export default Users;
