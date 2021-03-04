@@ -1,29 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import {GetStaticProps, NextPage} from 'next';
-import Link from 'next/link';
-import { useCallback, useState } from 'react';
-import { Form } from '../../components/Form';
+import { useForm } from '../../hooks/useForm';
 
 const PostsNew: NextPage = (props) => {
-  const [errors, setErrors] = useState({
-    title: [], content: []
-  });
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-  });
-  const onchange = useCallback((key,value)=>{
-    setFormData({
-      ...formData,
-      [key]: value
-    })
-  },[formData])
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    axios.post(`/api/v1/users`, formData)
+  const onSubmit = (formData:typeof initFormData) => {
+    //我们通过 typeof 操作符获取 initFormData 变量的类型并赋值给 formData 类型变量，之后我们就可以使用 formData 类型
+    axios.post(`/api/v1/posts`, formData)
       .then(() => {
         window.alert('注册成功')
-        window.location.href = '/sign_in'
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
@@ -32,25 +16,23 @@ const PostsNew: NextPage = (props) => {
           }
         }
       });
-  }, [formData]);
+  }
+
+  const initFormData =  {title:'',content:''}
+  const {form,setErrors} = useForm({
+      initFormData,
+      fields:[
+        {label:'标题',type:'text',key:'title'},
+        {label:'内容',type:'textarea',key:'content'}
+      ],
+      onSubmit,
+      buttons:<button type="submit">提交</button>
+    }
+  )
   return (
     <div>
       <h1>文章</h1>
-      <Form fields={[
-        {label:'标题',type:'text',value:formData.title,onchange:e => onchange('title',e.target.value),
-        errors:errors.title
-        },
-        {label:'内容',type:'textarea',value:formData.content,onchange:e => onchange('content',e.target.value),
-        errors:errors.content
-        }
-      ]}
-        onSubmit={onSubmit}
-        buttons={
-          <>
-            <button type="submit">添加文章</button>
-          </>
-        }
-      />
+      {form}
     </div>
   );
 };
