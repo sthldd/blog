@@ -7,7 +7,8 @@ const PostsNew: NextPage = (props) => {
     //我们通过 typeof 操作符获取 initFormData 变量的类型并赋值给 formData 类型变量，之后我们就可以使用 formData 类型
     axios.post(`/api/v1/posts`, formData)
       .then(() => {
-        window.alert('注册成功')
+        window.alert('添加成功')
+        window.location.reload()
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;

@@ -4,20 +4,15 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 import { withSession } from 'lib/withSession';
 import { Session } from 'inspector';
 import { User } from '../src/entity/User';
-import { Form } from '../components/Form';
+import { useForm } from 'hooks/useForm';
 
 const SignIn: NextPage<{user:User}> = (props) => {
-  const [formData, setFormData] = useState({
-    username: '1234',
-    password: '567',
-  });
-  const [errors, setErrors] = useState({
-    username: [], password: []
-  });
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
+
+  const onSubmit =(formData:typeof initFormData) => {
     axios.post(`/api/v1/sessions`, formData)
       .then(() => {
+        window.alert('登陆成功')
+        window.location.reload()
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
@@ -26,14 +21,19 @@ const SignIn: NextPage<{user:User}> = (props) => {
           }
         }
       });
-  }, [formData]);
+  }
 
-  const onchange = useCallback((key,value)=>{
-    setFormData({
-      ...formData,
-      [key]: value
-    })
-  },[formData])
+  const initFormData =  {  username: '1234',password: '567',}
+  const {form,setErrors} = useForm({
+      initFormData,
+      fields:[
+        {label:'用户名',type:'text',key:'username'},
+        {label:'密码',type:'password',key:'password'}
+      ],
+      onSubmit,
+      buttons:<button type="submit">登陆</button>
+    }
+  )
   return (
     <>
     {
@@ -41,21 +41,7 @@ const SignIn: NextPage<{user:User}> = (props) => {
         当前登陆用户：{props.user.username}
       </div> : <>
       <h1>登陆</h1>
-      <Form fields={[
-        {label:'用户名',type:'text',value:formData.username,onchange:e => onchange('username',e.target.value),
-          errors:errors.username
-        },
-        {label:'密码',type:'password',value:formData.password,onchange:e => onchange('password',e.target.value),
-          errors:errors.password
-        }
-      ]}
-        onSubmit={onSubmit}
-        buttons={
-          <>
-            <button type="submit">登陆</button>
-          </>
-        }
-      />
+      {form}
       </>
     }
     </>

@@ -38,11 +38,11 @@ export function useForm<T>(options:useFromOptions<T>){ //useForm的data有个类
   },[onSubmit,formData])
   const form = (
     <form onSubmit={_onsubmit}>
-    {fields.map(field=>
-      <div>
+    {fields.map((field,index)=>
+      <div key={index}>
         <label>
           {field.label}
-          {field.type === 'textarea' ? <textarea  onChange={(e)=>onchange(field.key,e.target.value)}>{formData[field.key]}</textarea> : <input type={field.type} value={formData[field.key].toString()} onChange={(e)=>onchange(field.key,e.target.value)}/>}
+          {field.type === 'textarea' ? <textarea  onChange={(e)=>onchange(field.key,e.target.value)} value={formData[field.key].toString()}></textarea> : <input type={field.type} value={formData[field.key].toString()} onChange={(e)=>onchange(field.key,e.target.value)}/>}
         </label>
         {errors[field.key]?.length > 0 && <div>
           {errors[field.key].join(',')}

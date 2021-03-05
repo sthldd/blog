@@ -16,6 +16,7 @@
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "@types/axios": "^0.14.0",
     "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "9.5.1",

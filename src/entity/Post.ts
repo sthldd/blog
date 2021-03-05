@@ -16,8 +16,8 @@ export class Post {
   createdAt:Date;
   @UpdateDateColumn()
   updatedAt:Date;
-  @ManyToOne(type => User,user => user.posts) //很多文章会对应一个user
+  @ManyToOne('User','posts') //很多文章会对应一个user
   author:User;
-  @OneToMany(type => Comment,comment => comment.post) //一片文章很多个评论
+  @OneToMany('Comment','post') //一片文章很多个评论
   comments:Comment[];
 }

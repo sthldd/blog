@@ -8,9 +8,9 @@ export class Comment {
   id:string;
   @Column('text')
   content:string;
-  @ManyToOne(type => User,user => user.comments) //很多评论会对应一个user
+  @ManyToOne('User','comments') //很多评论会对应一个user
   user:User;
-  @ManyToOne(type => Post,post => post.comments) //很多评论对应一篇文章
+  @ManyToOne('Post','comments') //很多评论对应一篇文章
   post:Post;
   @CreateDateColumn()
   createdAt:Date;
