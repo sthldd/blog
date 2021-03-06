@@ -8,7 +8,7 @@ const PostsNew: NextPage = (props) => {
     axios.post(`/api/v1/posts`, formData)
       .then(() => {
         window.alert('添加成功')
-        window.location.reload()
+        window.location.href = '/posts'
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
