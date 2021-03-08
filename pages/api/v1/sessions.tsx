@@ -1,7 +1,7 @@
 import {NextApiHandler} from 'next';
 import { SignIn } from 'src/model/SignIn'
 import { withSession } from 'lib/withSession';
-
+//@ts-ignore
 const Sessions: NextApiHandler = async (req, res) => {
   let {  username, password } = req.body
   res.setHeader('Content-Type', 'application/json; charset=utf-8');

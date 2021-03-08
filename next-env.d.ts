@@ -6,12 +6,7 @@ declare module "*.png" {
     const image: string;
     export default image;
 }
-type Post  = {
-    id:string;
-    title:string;
-    date:string;
-    content:string;
-}
+
 
 declare module 'next'{
     import { Session } from 'next-iron-session';

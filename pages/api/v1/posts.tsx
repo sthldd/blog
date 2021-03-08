@@ -4,7 +4,7 @@ import {Post} from '../../../src/entity/Post';
 import {getDatabaseConnection} from '../../../lib/getDatabaseConnection';
 import {withSession} from '../../../lib/withSession';
 
-
+  //@ts-ignore
 const Posts: NextApiHandler = withSession(async (req, res) => {
   if (req.method === 'POST') {
     const {title, content} = req.body;

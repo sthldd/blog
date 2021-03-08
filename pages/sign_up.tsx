@@ -48,6 +48,7 @@ export const getServerSideProps: GetServerSideProps = withSession( async (contex
   //@ts-ignore
    const user = context.req.session.get('currentUser') //获取浏览器 application 中的cookie数据 存的时候在登陆存的
    if(user){
+     //@ts-ignore
     context.req.session.destroy()
    }
    return {

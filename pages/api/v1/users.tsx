@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Between } from 'typeorm';
 
 // unique 可以保证username不重复 但是需要同步数据库功能开启 ormconfig 的 synchronize
-
+//@ts-ignore
 const Users: NextApiHandler = async (req, res) => {
   let {  username, password, passwordConfirmation} = req.body
   const connection = await getDatabaseConnection()

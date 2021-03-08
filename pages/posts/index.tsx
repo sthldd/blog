@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { Post } from 'src/entity/Post';
-import qs from 'query-string'
+import qs from 'querystring';
 
 type Props = {
   posts:Post[],
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const index = context.req.url.indexOf('?')
   const search = context.req.url.substring(index+1)
   const query = qs.parse(search)
-  const page = parseInt(query.page.toString()) || 1
+  const page = parseInt(query.page?.toString()) || 1
   const perpage = 3
   //findAndCount 找到并返回总数量
   const [posts,count] = await connection.manager.findAndCount(Post,{skip:(page - 1) * perpage,take:perpage})
