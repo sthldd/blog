@@ -2,21 +2,35 @@ import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import {useCallback, useState} from 'react';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import { withSession } from 'lib/withSession';
-import { Session } from 'inspector';
 import { User } from '../src/entity/User';
 import { useForm } from 'hooks/useForm';
+import { Form, Input, Button, message } from 'antd';
+import   '../styles/sign_in.less'
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 const SignIn: NextPage<{user:User}> = (props) => {
 
   const onSubmit =(formData:typeof initFormData) => {
     axios.post(`/api/v1/sessions`, formData)
       .then(() => {
-        window.alert('登陆成功')
+        message.success('登陆成功')
         window.location.reload()
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
+            for(let key in response.data){
+              if(response.data[key].length > 0){
+                message.error(response.data[key][0])
+              }
+            }
             setErrors(response.data);
           }
         }
@@ -34,17 +48,39 @@ const SignIn: NextPage<{user:User}> = (props) => {
       buttons:<button type="submit">登陆</button>
     }
   )
+
   return (
-    <>
-    {
-      props.user ? <div>
-        当前登陆用户：{props.user.username}
-      </div> : <>
-      <h1>登陆</h1>
-      {form}
-      </>
-    }
-    </>
+    props.user ? <div>当前登陆用户：{props.user.username}
+    </div>:
+    <div className='login_modal_container'>
+      <Form
+        {...layout}
+        name="basic"
+        onFinish={onSubmit}
+      >
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: '请输入用户名' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: '请输入密码' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          登陆
+        </Button>
+      </Form.Item>
+    </Form>
+  </div>
   );
 };
 

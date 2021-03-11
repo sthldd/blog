@@ -6,14 +6,8 @@ import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { Post } from 'src/entity/Post';
 import qs from 'querystring';
 
-type Props = {
-  posts:Post[],
-  count:number,
-  pageNum:number,
-  perpage:number,
-  totalPage:number,
-}
-const PostsIndex: NextPage<Props> = (props) => {
+
+const PostsIndex: NextPage<articleType> = (props) => {
   const {posts,count,pageNum,perpage,totalPage} = props;
   //console.log(posts);
   return (

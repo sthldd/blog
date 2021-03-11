@@ -24,6 +24,7 @@ psql -U xx //进入数据库
 \dt //查看数据库多少个表 display tables
 select * from xxx;//查看表的所有数据
 drop database xxx //删除表
+docker system prune //删除不用的容器
 ```
 ## 创建数据库
 

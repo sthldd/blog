@@ -13,7 +13,6 @@ const Users: NextApiHandler = async (req, res) => {
 
 
   const BetweenDates = () => Between(dayjs().startOf('day'), dayjs().endOf('day'));
-  //console.log(req.session,'1111222');
   const found = await connection.manager.find(User,{where:{createdAt:BetweenDates()}});
   if(found){
     const deal = JSON.parse(JSON.stringify(found))

@@ -1,6 +1,7 @@
-const withImages = require('next-images')
-module.exports = withImages({
-  webpack(config, options) {
-    return config
-  }
+const withLessExcludeAntd = require("./next-less.config.js");
+
+module.exports = withLessExcludeAntd({
+    lessLoaderOptions: {
+        javascriptEnabled: true,
+    }
 })
