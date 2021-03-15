@@ -1,19 +1,20 @@
 import React from 'react';
-import {getPost, getPostIds} from '../../lib/posts';
 import {GetServerSideProps, NextPage} from 'next';
 import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { Post } from 'src/entity/Post';
-
+import PageHeader from 'hooks/useHeader';
+import dayjs from 'dayjs';
 type Props = {
   post: Post
 }
 const postsShow: NextPage<Props> = (props) => {
   const {post} = props;
   return (
-    <div>
+    <div  className="container">
+      <PageHeader />
       <h1>{post.title}</h1>
-      <article dangerouslySetInnerHTML={   {__html: post.content}  }>
-      </article>
+      <div className="article-time" style={{marginBottom:'10px'}}><img src="/time.png" alt=""/>{dayjs(post.createdAt).format('YYYY-MM-DD HH:ss:mm')}</div>
+      <article dangerouslySetInnerHTML={   {__html: post.content}  }></article>
     </div>
   );
 };

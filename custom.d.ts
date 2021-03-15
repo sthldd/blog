@@ -9,7 +9,7 @@ type Post  = {
 type articleType = {
   posts:Post[],
   count:number,
-  pageNum:number,
+  page:number,
   perpage:number,
   totalPage:number,
 }

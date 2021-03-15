@@ -33,8 +33,9 @@ const List: NextPage<articleType> = (props) => {
       title: '文章内容',
       dataIndex: 'content',
       key: 'content',
+      width:'30%',
       align:'center',
-      render: (text: string) => text.substring(2)
+      render: (text: string) => text.slice(0,100)
     },
     {
         title: '创建时间',
