@@ -24,3 +24,8 @@ type articleItemType = {
   author: number,
   comments:string
 }
+
+type Tag = {
+  id:number,
+  name:string
+}

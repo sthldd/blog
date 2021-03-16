@@ -3,16 +3,16 @@ import {NextApiHandler} from 'next';
 import {Post} from '../../../src/entity/Post';
 import {getDatabaseConnection} from '../../../lib/getDatabaseConnection';
 import {withSession} from '../../../lib/withSession';
-import { getConnection } from 'typeorm';
 
-  //@ts-ignore
+//@ts-ignore
 const Posts: NextApiHandler = withSession(async (req, res) => {
   console.log(req.method);
   if (req.method === 'POST') {
-    const {title, content,id} = req.body;
+    const {title, content,id,tagId} = req.body;
     const post = new Post();
     post.title = title;
     post.content = content;
+    post.tagId = tagId;
     const user = req.session.get('currentUser');
     if(!user){
       res.statusCode = 401

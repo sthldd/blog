@@ -1,7 +1,6 @@
 import {BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import {Post} from './Post'
 import {Comment} from './Comment'
-import { getDatabaseConnection } from "lib/getDatabaseConnection";
 import md5 from 'md5'
 import _ from 'lodash'
 

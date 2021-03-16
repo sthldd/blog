@@ -12,6 +12,8 @@ export class Post {
   content:string;
   @Column('int')
   authorId:number;
+  @Column('int')
+  tagId:number;
   @CreateDateColumn()
   createdAt:Date;
   @UpdateDateColumn()

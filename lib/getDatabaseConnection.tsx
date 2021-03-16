@@ -4,13 +4,14 @@ import {Post} from 'src/entity/Post'
 import {User} from 'src/entity/User'
 import {Comment} from 'src/entity/Comment'
 import config from 'ormconfig.json'
+import { Tag } from 'src/entity/Tag';
 
 const create = () =>{
   //@ts-ignore
    return createConnection({
      ...config,
      database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
-     entities:[Post,User,Comment]
+     entities:[Post,User,Comment,Tag]
    })
 }
 

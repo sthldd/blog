@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import Head from "next/head";
 import 'antd/dist/antd.css';
+import 'highlight.js/styles/atom-one-light.css'
 import qs from 'querystring';
 import 'react-markdown-editor-lite/lib/index.css';
 import { LayoutHeader } from 'components/LayoutHeader';
