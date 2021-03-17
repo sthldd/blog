@@ -1,12 +1,12 @@
 import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { withSession } from 'lib/withSession';
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
-import axios, {AxiosError, AxiosResponse} from 'axios';
 import { Tag } from 'src/entity/Tag';
 import qs from 'querystring';
-import {Button, Input, message, Modal, Table} from 'antd'
+import {Button, Input, message, Modal, Table, Upload} from 'antd'
 import React, {useRef, useState} from 'react';
 import { useRouter } from 'next/router'
+import request from 'utils/request';
 
 type tagType ={
   tags:[{id:number,name:string}]
@@ -25,41 +25,25 @@ const TagsList: NextPage<tagType> = (props) => {
     let {value} = tagInputRef.current.state
     if(!value)return message.error('请输入标签')
     if(modalType === 'add'){
-      axios.post('/api/v1/tags', {name:value})
-      .then(() => {
+      request({
+        url:'/api/v1/tags',
+        method:'post',
+        data: {name:value}
+      }) .then(() => {
         message.success('添加成功')
         setIsModalVisible(false);
         router.reload()
-      }, (error) => {
-        if (error.response) {
-          const response: AxiosResponse = error.response;
-          if (response.status === 422) {
-            for(let key in response.data){
-              if(response.data[key].length > 0){
-                message.error(response.data[key][0])
-              }
-            }
-          }
-        }
-      });
+      })
     }else{
-      axios.patch(`/api/v1/tags/${currentItem.id}`, {name:value})
-      .then(() => {
-        message.success('添加成功')
+      request({
+        url:`/api/v1/tags/${currentItem.id}`,
+        method:'patch',
+        data: {name:value,id:currentItem.id}
+      }) .then(() => {
+        message.success('更新成功')
         setIsModalVisible(false);
         router.reload()
-      }, (error) => {
-        if (error.response) {
-          const response: AxiosResponse = error.response;
-          if (response.status === 422) {
-            for(let key in response.data){
-              if(response.data[key].length > 0){
-                message.error(response.data[key][0])
-              }
-            }
-          }
-        }
-      });
+      })
     }
   };
   const handleCancel = () => {
@@ -105,26 +89,16 @@ const TagsList: NextPage<tagType> = (props) => {
       cancelText: '取消',
       okText: '确定',
       onOk: () => {
-        axios.delete(`/api/v1/tags/${id}`,)
-        .then(() => {
+        request({
+          url:`/api/v1/tags/${id}`,
+          method:'delete',
+        }) .then(() => {
           message.success('删除成功')
           router.reload()
-        }, (error) => {
-          if (error.response) {
-            const response: AxiosResponse = error.response;
-            if (response.status === 422) {
-              for(let key in response.data){
-                if(response.data[key].length > 0){
-                  message.error(response.data[key][0])
-                }
-              }
-            }
-          }
-        });
+        })
       }
-  })
+    })
   }
-
   return(
     <>
       <Button type="primary" style={{marginBottom:'10px'}} onClick={()=> setIsModalVisible(true)}>+添加标签</Button>
@@ -156,7 +130,7 @@ export const getServerSideProps: GetServerSideProps = withSession( async (contex
   const page = parseInt(query.page?.toString()) || 1
   const perpage = 10
   //findAndCount 找到并返回总数量
-  const [tags,count] = await connection.manager.findAndCount(Tag,{skip:(page - 1) * perpage,take:perpage})
+  const [tags,count] = await connection.manager.findAndCount(Tag,{skip:(page - 1) * perpage,take:perpage,order:{id:'ASC'}})
   return {
     props: {
       tags:JSON.parse(JSON.stringify(tags)),

@@ -9,13 +9,14 @@ import dayjs from 'dayjs';
 import {useState} from 'react';
 import { useRouter } from 'next/router'
 import Filter from './Filter';
+import request from '../../../utils/request';
 
 
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
   const {posts,count,pageNum,perpage,totalPage} = props;
   const [currentItem,setCurrentItem] = useState({})
-
+ 
   const columns = [
     {
       title: '文章ID',
@@ -79,24 +80,15 @@ const List: NextPage<articleType> = (props) => {
       cancelText: '取消',
       okText: '确定',
       onOk: () => {
-        axios.delete(`/api/v1/posts/${id}`,)
-        .then(() => {
+        request({
+          url:`/api/v1/posts/${id}`,
+          method:'delete'
+        }) .then(() => {
           message.success('删除成功')
           router.reload()
-        }, (error) => {
-          if (error.response) {
-            const response: AxiosResponse = error.response;
-            if (response.status === 422) {
-              for(let key in response.data){
-                if(response.data[key].length > 0){
-                  message.error(response.data[key][0])
-                }
-              }
-            }
-          }
-      });
+        })
       }
-  })
+    })
   }
 
   return(

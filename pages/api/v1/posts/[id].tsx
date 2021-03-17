@@ -8,7 +8,6 @@ const Posts: NextApiHandler = withSession(async (req, res) => {
     const connection = await getDatabaseConnection();
     const {title, content, id,createdAt} = req.body;
     const post = await connection.manager.findOne<Post>('Post', id);
-    console.log(post,'post');
     post.title = title;
     post.content = content;
     post.createdAt = createdAt;

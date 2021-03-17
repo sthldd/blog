@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Button,Form, Input, Select ,DatePicker, message} from 'antd';
+import {Button,Form, Input, Select ,DatePicker, message, Upload} from 'antd';
 import { GetServerSideProps, GetServerSidePropsContext, NextComponentType, NextPage } from 'next';
 import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { withSession } from 'lib/withSession';
@@ -31,6 +31,7 @@ import { useRouter } from 'next/router'
 import moment from 'moment';
 import axios, { AxiosResponse } from 'axios';
 import { Tag } from 'src/entity/Tag';
+import request from 'utils/request';
 const { Option } = Select;
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
   ssr: false
@@ -101,41 +102,41 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
 
   const  postData = (values:atricleType) => {
     if(values.id){
-      axios.patch(`/api/v1/posts/${values.id}`, values)
-      .then(() => {
-        message.success('添加成功')
-        //router.back()
-      }, (error) => {
-        if (error.response) {
-          const response: AxiosResponse = error.response;
-          if (response.status === 422) {
-            for(let key in response.data){
-              if(response.data[key].length > 0){
-                message.error(response.data[key][0])
-              }
-            }
-          }
-        }
-      });
+      request({
+        url:`/api/v1/posts/${values.id}`,
+        method:'patch',
+        data: values
+      }) .then(() => {
+        message.success('更新成功')
+        router.back()
+      })
     }else{
-      axios.post('/api/v1/posts', values)
-      .then(() => {
+      request({
+        url:'/api/v1/posts',
+        method:'post',
+        data: values
+      }) .then(() => {
         message.success('添加成功')
-        //router.back()
-      }, (error) => {
-        if (error.response) {
-          const response: AxiosResponse = error.response;
-          if (response.status === 422) {
-            for(let key in response.data){
-              if(response.data[key].length > 0){
-                message.error(response.data[key][0])
-              }
-            }
-          }
-        }
-      });
+        router.back()
+      })
     }
   }
+
+  const handleImageUpload = (file: File): Promise<string> => {
+    return new Promise(resolve => {
+      const formData = new FormData();
+		  formData.append('file', file);
+      axios.post('/api/v1/uploadImg', formData)
+      .then((res) => {
+        resolve(res.data.url);
+        message.success('上传成功')
+      }, (error) => {
+        if (error.response) {
+          message.error('上传图片出错了')
+        }
+      });
+    });
+  };
 
   return(
     <Form {...layout}
@@ -173,6 +174,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
                 hideMenu: true,
               },
             }}
+            onImageUpload={handleImageUpload}
             renderHTML={(text: string) => mdParser.render(text)}
             ref={editorRef}
           />
