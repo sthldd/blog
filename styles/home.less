@@ -61,26 +61,17 @@ header{
   }
 }
 .logo-wrapper{
-  border: 1px solid red;
   padding: 10px;
   position: fixed;
   top:50%;
   left: 6%;
 }
 .music-logo{
-  -webkit-animation: animal 4s infinite linear alternate;
+  animation: animal 4s infinite linear;
 }
 @-webkit-keyframes animal {
-  0%{
-    transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(-360deg);
-    -ms-transform: rotate(-360deg);
-    -webkit-transform: rotate(-360deg);
-  }
+  0% { transform: rotate(0deg)}
+  100% { transform: rotate(360deg)}
 }
 .pause-music{
   animation-play-state:paused;

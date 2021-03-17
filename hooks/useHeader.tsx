@@ -7,8 +7,8 @@ const PageHeader: NextPage = () => {
   const [activeIndex,setActiveIndex] = useState<number>(1)
   const hrefList =[
     {title:'首页',index:1,href:'/'},
-    {title:'归档',index:2,href:'/'},
-    {title:'关于',index:3,href:'/'},
+    {title:'归档',index:2,href:'/tag'},
+    {title:'关于',index:3,href:'/about'},
   ]
 
   const clickHandle = (index:typeof activeIndex) =>{
@@ -16,7 +16,7 @@ const PageHeader: NextPage = () => {
   }
   return (
       <header>
-        <h1>文章列表</h1>
+        <Link href={'/'}><h1>文章列表</h1></Link>
         <div className="nav-menu">
           {
             hrefList.map(item=>{

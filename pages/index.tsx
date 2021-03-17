@@ -9,11 +9,19 @@ import dayjs from 'dayjs';
 import { usePager } from 'hooks/usePager';
 import PageHeader from 'hooks/useHeader';
 import ReactAudioPlayer from 'react-audio-player';
+import { message } from 'antd';
 
+var musicList = [
+  'https://sthl-1256208836.cos.ap-shanghai.myqcloud.com/music/%E8%AE%B8%E5%B5%A9%20-%20%E5%8D%97%E5%B1%B1%E5%BF%86.mp3',
+  'https://sthl-1256208836.cos.ap-shanghai.myqcloud.com/music/Ed%20Harcourt%20-%20Like%20Sunday%2C%20Like%20Rain%20%28mp3cut%20%28mp3cut.net%29.mp3'
+]
 const Index: NextPage<articleType> = (props) => {
   const {posts,page,totalPage} = props;
   const {pager} = usePager({page, totalPage});
-  const [audioStatus,setAudioStatus] = useState<boolean>(true)
+  const [audioStatus,setAudioStatus] = useState<boolean>(false)
+  const [currentSrcIndex,setCurrentSrcIndex] = useState<number>(0)
+
+
   useEffect(() => {
     window.addEventListener('click', handleScroll);
     return () => window.removeEventListener('click', handleScroll);
@@ -22,10 +30,12 @@ const Index: NextPage<articleType> = (props) => {
     if(audioRef && audioRef.audioEl){
       audioRef.audioEl.current.play()
     }
+    setAudioStatus(true)
   }
   let audioRef = useRef<HTMLInputElement>()
   // (formData:typeof initFormData) 我们通过 typeof 操作符获取 initFormData 变量的类型并赋值给 formData 类型变量，之后我们就可以使用 formData 类型
-  const audioHandle = () =>{
+  const audioHandle = (e) =>{
+    e.stopPropagation(); 
     if(audioStatus){
       setAudioStatus(false)
       audioRef.audioEl.current.pause()
@@ -34,11 +44,20 @@ const Index: NextPage<articleType> = (props) => {
       audioRef.audioEl.current.play()
     }
   }
+  const onEnded = (e) =>{
+    if(currentSrcIndex === 0){
+      setCurrentSrcIndex(1)
+    }else{
+      setCurrentSrcIndex(0)
+      setAudioStatus(false)
+      audioRef.audioEl.current.pause()
+    }
+  }
   return (
     <div className="container">
       <PageHeader />
-      <div className={`logo-wrapper ${audioStatus ? 'play-music' : 'pause-music'}`} onClick={audioHandle}>
-        <img src="/music.svg" alt="" className="music-logo"/>
+      <div className="logo-wrapper" onClick={(e)=>audioHandle(e)}>
+        <img src="/music.svg" alt=""  className={`music-logo ${audioStatus ? 'play-music' : 'pause-music'}`} />
       </div>
       <ul>
       {
@@ -57,8 +76,9 @@ const Index: NextPage<articleType> = (props) => {
         <ReactAudioPlayer
           id="musicplayer"
           ref={(element) => { audioRef = element; }}
-          src="https://sthl-1256208836.cos.ap-shanghai.myqcloud.com/%E8%AE%B8%E5%B5%A9%20-%20%E5%8D%97%E5%B1%B1%E5%BF%86.mp3"
+          src={musicList[currentSrcIndex]}
           autoPlay
+          onEnded={onEnded}
           />
       </div>
       <footer>
