@@ -2,13 +2,14 @@ import { NextPage} from 'next';
 import React, {useState} from 'react';
 import Link from 'next/link';
 import '../styles/home.less'
+import image from '../next-env';
 
 const PageHeader: NextPage = () => {
   const [activeIndex,setActiveIndex] = useState<number>(1)
   const hrefList =[
     {title:'首页',index:1,href:'/'},
-    {title:'归档',index:2,href:'/tag'},
-    {title:'关于',index:3,href:'/about'},
+    {title:'归档',index:2,href:'/'},
+    {title:'关于',index:3,href:'/'},
   ]
 
   const clickHandle = (index:typeof activeIndex) =>{
@@ -16,7 +17,7 @@ const PageHeader: NextPage = () => {
   }
   return (
       <header>
-        <Link href={'/'}><h1>文章列表</h1></Link>
+        <Link href={'/'}><img src="/title.png" /></Link>
         <div className="nav-menu">
           {
             hrefList.map(item=>{

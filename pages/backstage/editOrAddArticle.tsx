@@ -153,7 +153,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
             allowClear
           >
             {
-              tagList && tagList.length > 0 && tagList.map(item=><Option value={item.id}>{item.name}</Option>)
+              tagList && tagList.length > 0 && tagList.map(item=><Option value={item.id} key={item.id}>{item.name}</Option>)
             }
           </Select>
         </Form.Item>

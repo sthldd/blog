@@ -48,24 +48,34 @@ header{
   word-break: normal;
   cursor: pointer;
 }
+.article-wrapper{
+  position: relative;
+}
 .article-time{
   padding: 0;
   margin: 15px 0 0;
   color: #6e7173;
   text-indent: .15em;
 }
+.logo-wrapper{
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: -3%;
+}
 @media screen and (max-width: 900px){
   .container {
     width: 90%;
     margin-top: 20px;
   }
+  .logo-wrapper{
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: -10%;
+  }
 }
-.logo-wrapper{
-  padding: 10px;
-  position: fixed;
-  top:50%;
-  left: 6%;
-}
+
 .music-logo{
   animation: animal 4s infinite linear;
 }

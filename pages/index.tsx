@@ -56,14 +56,14 @@ const Index: NextPage<articleType> = (props) => {
   return (
     <div className="container">
       <PageHeader />
-      <div className="logo-wrapper" onClick={(e)=>audioHandle(e)}>
-        <img src="/music.svg" alt=""  className={`music-logo ${audioStatus ? 'play-music' : 'pause-music'}`} />
-      </div>
-      <ul>
+      <ul className="article-wrapper">
+        <div className="logo-wrapper" onClick={(e)=>audioHandle(e)}>
+          <img src="/music.svg" alt=""  className={`music-logo ${audioStatus ? 'play-music' : 'pause-music'}`} />
+        </div>
       {
         posts.map(item=>{
           return(
-            <li  className="article-item" id={item.id}>
+            <li  className="article-item" key={item.id}>
               <Link  key={item.id} href={`/posts/${item.id}`}><h1 className="article-title">{item.title}</h1></Link>
               <div className="article-time"><img src="/time.png" alt=""/>{dayjs(item.createdAt).format('YYYY-MM-DD HH:ss:mm')}</div>
               <p className="article-content">{item.content}</p>
