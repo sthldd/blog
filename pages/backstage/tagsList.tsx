@@ -104,6 +104,7 @@ const TagsList: NextPage<tagType> = (props) => {
       <Button type="primary" style={{marginBottom:'10px'}} onClick={()=> setIsModalVisible(true)}>+添加标签</Button>
       <Table
           dataSource={tags}
+          //@ts-ignore
           columns={columns}
           simple
           rowKey={record => record.id}

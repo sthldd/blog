@@ -9,7 +9,6 @@ import dayjs from 'dayjs';
 import { usePager } from 'hooks/usePager';
 import PageHeader from 'hooks/useHeader';
 import ReactAudioPlayer from 'react-audio-player';
-import { message } from 'antd';
 
 var musicList = [
   'https://sthl-1256208836.cos.ap-shanghai.myqcloud.com/music/%E8%AE%B8%E5%B5%A9%20-%20%E5%8D%97%E5%B1%B1%E5%BF%86.mp3',
@@ -27,29 +26,37 @@ const Index: NextPage<articleType> = (props) => {
     return () => window.removeEventListener('click', handleScroll);
   });
   const handleScroll = () => {
+    //@ts-ignore
     if(audioRef && audioRef.audioEl){
+      //@ts-ignore
       audioRef.audioEl.current.play()
     }
     setAudioStatus(true)
   }
   let audioRef = useRef<HTMLInputElement>()
   // (formData:typeof initFormData) 我们通过 typeof 操作符获取 initFormData 变量的类型并赋值给 formData 类型变量，之后我们就可以使用 formData 类型
+
+  //@ts-ignore
   const audioHandle = (e) =>{
     e.stopPropagation(); 
     if(audioStatus){
       setAudioStatus(false)
+      //@ts-ignore
       audioRef.audioEl.current.pause()
     }else{
       setAudioStatus(true)
+      //@ts-ignore
       audioRef.audioEl.current.play()
     }
   }
+  //@ts-ignore
   const onEnded = (e) =>{
     if(currentSrcIndex === 0){
       setCurrentSrcIndex(1)
     }else{
       setCurrentSrcIndex(0)
       setAudioStatus(false)
+      //@ts-ignore
       audioRef.audioEl.current.pause()
     }
   }
@@ -75,6 +82,7 @@ const Index: NextPage<articleType> = (props) => {
       <div>
         <ReactAudioPlayer
           id="musicplayer"
+          //@ts-ignore
           ref={(element) => { audioRef = element; }}
           src={musicList[currentSrcIndex]}
           autoPlay

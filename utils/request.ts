@@ -30,7 +30,7 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
+//@ts-ignore
 const fetch = options => {
     let { method = 'get', data, fetchType, responseType, url } = options
     const cloneData = _.cloneDeep(data)
@@ -72,7 +72,7 @@ const fetch = options => {
             return axios(options)
     }
 }
-
+    //@ts-ignore
     export default function request (options) {
       return fetch(options)
         .then(response => {
@@ -88,7 +88,7 @@ const fetch = options => {
               const { data, statusText } = response
               statusCode = response.status
               if (statusCode === 401) {
-                //   window.location.href = `/sign_in`
+                window.location.href = '/sign_in'
               } else if (statusCode === 403) {
                   msg = data.message || '无权限'
               } else {

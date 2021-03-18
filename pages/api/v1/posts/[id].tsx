@@ -2,7 +2,7 @@ import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { withSession } from 'lib/withSession';
 import {NextApiHandler} from 'next';
 
-
+//@ts-ignore
 const Posts: NextApiHandler = withSession(async (req, res) => {
   if (req.method === 'PATCH') {
     const connection = await getDatabaseConnection();

@@ -164,6 +164,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
           <MdEditor
             value={editroVal}
             style={{ height: "70vh" }}
+            //@ts-ignore
             onChange={({html, text})=>setEditroVal(text)}
             config={{
               view: {

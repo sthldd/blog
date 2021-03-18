@@ -30,10 +30,13 @@ const UploadImg: NextApiHandler = withSession(async (req, res) => {
         if (err) return reject(err)
         var filePath = '';
         if(files.tmpFile){
+          //@ts-ignore
             filePath = files.tmpFile.path;
         } else {
             for(var key in files){
+              //@ts-ignore
                 if( files[key].path && filePath==='' ){
+                  //@ts-ignore
                     filePath = files[key].path;
                     break;
                 }

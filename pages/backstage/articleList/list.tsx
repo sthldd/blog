@@ -8,15 +8,13 @@ import {Button, message, Modal, Table} from 'antd'
 import dayjs from 'dayjs';
 import {useState} from 'react';
 import { useRouter } from 'next/router'
-import Filter from './Filter';
 import request from '../../../utils/request';
 
 
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
-  const {posts,count,pageNum,perpage,totalPage} = props;
-  const [currentItem,setCurrentItem] = useState({})
- 
+  const {posts} = props;
+
   const columns = [
     {
       title: '文章ID',
@@ -60,7 +58,6 @@ const List: NextPage<articleType> = (props) => {
           return (
               <>
                   <Button  type="primary" onClick={() => onEditItem(record.id)}>编辑</Button>
-                  {/* <Button  type="primary" style={{margin:'0 10px'}} onClick={() => showDetail(record.id)}>查看详情</Button> */}
                   <Button  danger type="primary" style={{marginLeft:'10px'}} onClick={() => deleteItem(record.id)}>删除</Button>
               </>
           )
@@ -71,9 +68,7 @@ const List: NextPage<articleType> = (props) => {
   const onEditItem = (id:number) =>{
     router.push(`/backstage/editOrAddArticle?id=${id}`)
   }
-  const showDetail = (id:number) =>{
-    setCurrentItem(id)
-  }
+ 
   const deleteItem = (id:number) =>{
     Modal.confirm({
       content: '确认要删除该文章吗？',
@@ -93,10 +88,10 @@ const List: NextPage<articleType> = (props) => {
 
   return(
     <>
-      {/* <Filter></Filter> */}
       <Button type="primary" style={{marginBottom:'10px'}} onClick={()=>router.push('/backstage/editOrAddArticle')}>+添加文章</Button>
       <Table
           dataSource={posts}
+          //@ts-ignore
           columns={columns}
           simple
           rowKey={record => record.id}
