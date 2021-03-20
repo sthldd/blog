@@ -14,7 +14,6 @@ import request from '../../../utils/request';
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
   const {posts} = props;
-
   const columns = [
     {
       title: '文章ID',
@@ -111,6 +110,8 @@ export const getServerSideProps: GetServerSideProps = withSession( async (contex
   const perpage = 10
   //findAndCount 找到并返回总数量
   const [posts,count] = await connection.manager.findAndCount(Post,{skip:(page - 1) * perpage,take:perpage,order:{createdAt:'DESC'}})
+
+ 
   return {
     props: {
       posts:JSON.parse(JSON.stringify(posts)),

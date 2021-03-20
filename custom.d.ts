@@ -3,6 +3,7 @@ type Post  = {
   title:string;
   date:string;
   content:string;
+  htmlContent:string;
   createdAt:string
 }
 

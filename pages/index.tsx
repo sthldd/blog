@@ -20,17 +20,13 @@ const Index: NextPage<articleType> = (props) => {
   const [audioStatus,setAudioStatus] = useState<boolean>(false)
   const [currentSrcIndex,setCurrentSrcIndex] = useState<number>(0)
 
-
-  useEffect(() => {
-    window.addEventListener('click', handleScroll);
-    return () => window.removeEventListener('click', handleScroll);
-  });
+  // useEffect(() => {
+  //   window.addEventListener('click', handleScroll);
+  //   return () => window.removeEventListener('click', handleScroll);
+  // });
   const handleScroll = () => {
     //@ts-ignore
-    if(audioRef && audioRef.audioEl){
-      //@ts-ignore
-      audioRef.audioEl.current.play()
-    }
+    controlAudio(true)
     setAudioStatus(true)
   }
   let audioRef = useRef<HTMLInputElement>()
@@ -42,13 +38,24 @@ const Index: NextPage<articleType> = (props) => {
     if(audioStatus){
       setAudioStatus(false)
       //@ts-ignore
-      audioRef.audioEl.current.pause()
+      controlAudio(false)
     }else{
       setAudioStatus(true)
       //@ts-ignore
-      audioRef.audioEl.current.play()
+      controlAudio(true)
     }
   }
+
+  const controlAudio = (val:boolean) =>{
+    if(audioRef && audioRef.audioEl ){
+      if(val){
+        audioRef.audioEl.current.play()
+      }else{
+        audioRef.audioEl.current.pause()
+      }
+    }
+  }
+
   //@ts-ignore
   const onEnded = (e) =>{
     if(currentSrcIndex === 0){
@@ -56,8 +63,7 @@ const Index: NextPage<articleType> = (props) => {
     }else{
       setCurrentSrcIndex(0)
       setAudioStatus(false)
-      //@ts-ignore
-      audioRef.audioEl.current.pause()
+      controlAudio(false)
     }
   }
   return (
@@ -73,7 +79,7 @@ const Index: NextPage<articleType> = (props) => {
             <li  className="article-item" key={item.id}>
               <Link  key={item.id} href={`/posts/${item.id}`}><h1 className="article-title">{item.title}</h1></Link>
               <div className="article-time"><img src="/time.png" alt=""/>{dayjs(item.createdAt).format('YYYY-MM-DD HH:ss:mm')}</div>
-              <p className="article-content">{item.content}</p>
+              <div className="article-content"  dangerouslySetInnerHTML = {{ __html: item.htmlContent }}></div>
             </li>
           )
         })
@@ -103,12 +109,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const search = context.req.url.substring(index+1)
   const query = qs.parse(search)
   const page = parseInt(query.page?.toString()) || 1
-  const perpage = 3
+  const perpage = 5
   //findAndCount 找到并返回总数量
   const [posts,count] = await connection.manager.findAndCount(Post,{skip:(page - 1) * perpage,take:perpage})
-  for(let i = 0;i<posts.length;i++){
-    posts[i].content = posts[i].content.slice(0,200)
-  }
   return {
     props: {
       posts:JSON.parse(JSON.stringify(posts)),

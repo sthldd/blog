@@ -16,3 +16,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+h2{
+  font: bold 25px/1.1 ff-tisa-web-pro,Cambria,"Times New Roman",Georgia,Times,sans-serif;
+  font-weight: 500;
+}

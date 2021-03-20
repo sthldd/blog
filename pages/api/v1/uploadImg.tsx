@@ -26,7 +26,6 @@ const UploadImg: NextApiHandler = withSession(async (req, res) => {
       form.encoding = 'utf-8';
       form.keepExtensions = true;
       form.parse(req, (err, fields, files) => {
-        console.log(files,'files');
         if (err) return reject(err)
         var filePath = '';
         if(files.tmpFile){

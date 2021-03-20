@@ -47,6 +47,11 @@ header{
   text-justify: distribute;
   word-break: normal;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .article-wrapper{
   position: relative;
@@ -88,4 +93,24 @@ header{
 }
 .play-music{
   animation-play-state:running;
+}
+.record-item-wrapper{
+  margin: .3em 0;
+  .record-item{
+    padding-left: 2.7em;
+    .record-item-time{
+      padding-right: .7em;
+    }
+    .record-item-title{
+      cursor: pointer;
+      color: #6e7173;
+    }
+  }
+}
+.tag-name{
+  padding: 0 5px;
+  margin: 3px;
+  display: inline-block;
+  font-size: 1em;
+  color:#424242;
 }

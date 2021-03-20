@@ -47,6 +47,7 @@ type atricleType = {
   tagId?:number;
   title:string;
   content:string;
+  htmlContent:string;
   createdAt:string;
 }
 const layout = {
@@ -61,7 +62,8 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
   const router = useRouter()
   const editorRef = useRef(null);
   const {post:{title,createdAt,content,id,tagId},status,tagList} = props;
-  const [editroVal,setEditroVal] = useState<string>()
+  const [editroVal,setEditroVal] = useState<any>('')
+  const [editroHtmlVal,setEditroHtmlVal] = useState<string>('')
   useEffect(()=>{
     if(status === 'edit' && content){
       setEditroVal(content)
@@ -94,6 +96,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     if(!editroVal)return message.error('请输入文章内容')
     values.createdAt = moment(values.createdAt).toISOString()
     values.content = editroVal
+    values.htmlContent = editroHtmlVal
     if(id){
       values.id = id
     }
@@ -117,7 +120,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
         data: values
       }) .then(() => {
         message.success('添加成功')
-        router.back()
+        //router.back()
       })
     }
   }
@@ -137,7 +140,10 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
       });
     });
   };
-
+  const setVal = (event:any) =>{
+    setEditroVal(event.text)
+    setEditroHtmlVal(event.html)
+  }
   return(
     <Form {...layout}
       name="control-ref"
@@ -165,7 +171,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
             value={editroVal}
             style={{ height: "70vh" }}
             //@ts-ignore
-            onChange={({html, text})=>setEditroVal(text)}
+            onChange={setVal}
             config={{
               view: {
                 menu: true,
