@@ -38,3 +38,5 @@ blog-data
 .next
 yarn-error.log
 dist
+css-selector-tokenizer
+string-hash
