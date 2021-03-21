@@ -24,7 +24,7 @@ import mark from 'markdown-it-mark'
 //@ts-ignore
 import tasklists from 'markdown-it-task-lists'
 // import 'moment/locale/zh-cn';
-import monent from 'moment'
+import moment from 'moment'
 // import locale from 'antd/es/date-picker/locale/zh_CN';
 import { useRouter } from 'next/router'
 import axios, { AxiosResponse } from 'axios';
@@ -72,9 +72,10 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     linkify: true,
     typographer: true,
     highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        console.log(hljs,'hljshljs');
+      //@ts-ignore
+      if (lang && hljs && hljs.getLanguage(lang)) {
         try {
+          //@ts-ignore
           return hljs.highlight(lang, str).value
         } catch (__) {}
       }
@@ -147,7 +148,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     <Form {...layout}
       name="control-ref"
       onFinish={onFinish}
-      initialValues={{ title,createdAt:createdAt && monent(createdAt),tagId}}
+      initialValues={{ title,createdAt:createdAt && moment(createdAt),tagId}}
     >
       <Form.Item name="title" label="名称" rules={[{ required: true }]}>
         <Input allowClear placeholder="请输入文章标题"/>
