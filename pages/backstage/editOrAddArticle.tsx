@@ -6,7 +6,6 @@ import { withSession } from 'lib/withSession';
 import { Post } from 'src/entity/Post';
 import MarkdownIt from 'markdown-it'
 import dynamic from "next/dynamic";
-import hljs from 'highlight.js'
 import emoji from 'markdown-it-emoji'
 //@ts-ignore
 import subscript from 'markdown-it-sub'
@@ -28,7 +27,6 @@ import tasklists from 'markdown-it-task-lists'
 import monent from 'moment'
 // import locale from 'antd/es/date-picker/locale/zh_CN';
 import { useRouter } from 'next/router'
-import moment from 'moment';
 import axios, { AxiosResponse } from 'axios';
 import { Tag } from 'src/entity/Tag';
 import request from 'utils/request';
@@ -75,6 +73,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     typographer: true,
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
+        console.log(hljs,'hljshljs');
         try {
           return hljs.highlight(lang, str).value
         } catch (__) {}

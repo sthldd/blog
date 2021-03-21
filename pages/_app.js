@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }) {
       <title>記</title>
       <meta name="viewport"
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css"></link>
     </Head>
 
   {
@@ -70,6 +71,7 @@ function MyApp({ Component, pageProps }) {
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>
       </Layout>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
     </>
   }
     </>

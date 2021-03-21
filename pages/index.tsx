@@ -47,10 +47,13 @@ const Index: NextPage<articleType> = (props) => {
   }
 
   const controlAudio = (val:boolean) =>{
+    //@ts-ignore
     if(audioRef && audioRef.audioEl ){
       if(val){
+        //@ts-ignore
         audioRef.audioEl.current.play()
       }else{
+        //@ts-ignore
         audioRef.audioEl.current.pause()
       }
     }

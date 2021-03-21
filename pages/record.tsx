@@ -18,11 +18,13 @@ const record: NextPage<Props> = (props) => {
       <PageHeader />
       <div>
         {
+          //@ts-ignore
           post.map(item=>
             <div key={item.year} className="record-item-wrapper">
               <h2>{item.year}</h2>
               <ul className="record-item">
                 {
+                  //@ts-ignore
                   item.list.map(i=>
                     <li key={i.id}>
                       <span className="record-item-time">{dayjs(i.createdAt).format(`YYYY${'年'}MM${'月'}DD${'日'}`)}</span>

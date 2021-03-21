@@ -19,11 +19,13 @@ const tags: NextPage<Props> = (props) => {
       } */}
       <div>
         {
+          //@ts-ignore
           post.map(item=>
             <div key={item.tagName} className="record-item-wrapper"> 
               <span id={item.tagName}  style={{fontWeight: 700,fontSize:'16px'}}>{item.tagName}</span>
               <ul className="record-item">
                 {
+                  //@ts-ignore
                   item.list.map(i=>
                     <li key={i.id} style={{listStyle:'none'}}>
                       <Link  key={i.id} href={`/posts/${i.id}`}>
