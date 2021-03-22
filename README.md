@@ -29,7 +29,7 @@ docker system prune //删除不用的容器
 ## 创建数据库
 
 ```c
-CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
+CREATE DATABASE blog_production ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
 ```
 
 First, run the development server:
@@ -40,6 +40,11 @@ npm run dev
 yarn dev
 ```
 
+
+```
+(formData:typeof initFormData) 通过 typeof 操作符获取 initFormData 变量的类型并赋值给 formData 类型变量，之后就可以使用 formData 类型
+
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.

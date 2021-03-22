@@ -4,5 +4,5 @@ git pull &&
 yarn install --production=false &&
 yarn build &&
 docker build -t mlx/node-web-app . &&
-docker run --name app --network=host  -p 3000:3000 -d mlx/node-web-app &&
+docker run  --network=host  -p 3000:3000 -d mlx/node-web-app &&
 echo 'ok!'
