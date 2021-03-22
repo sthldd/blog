@@ -15,7 +15,7 @@ const postsShow: NextPage<Props> = (props) => {
       <PageHeader />
       <h1>{post.title}</h1>
       <div className="article-time" style={{marginBottom:'10px'}}><img src="/time.png" alt=""/>{dayjs(post.createdAt).format('YYYY-MM-DD HH:ss:mm')}</div>
-      <div className="custom-html-style" dangerouslySetInnerHTML = {{ __html: post.content }}></div>
+      <div className="custom-html-style" dangerouslySetInnerHTML = {{ __html: post.htmlContent }}></div>
     </div>
   );
 };
