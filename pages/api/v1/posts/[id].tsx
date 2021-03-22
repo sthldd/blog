@@ -6,11 +6,12 @@ import {NextApiHandler} from 'next';
 const Posts: NextApiHandler = withSession(async (req, res) => {
   if (req.method === 'PATCH') {
     const connection = await getDatabaseConnection();
-    const {title, content, id,createdAt} = req.body;
+    const {title, content, id,createdAt,htmlContent} = req.body;
     const post = await connection.manager.findOne<Post>('Post', id);
     post.title = title;
     post.content = content;
     post.createdAt = createdAt;
+    post.htmlContent = htmlContent;
     const user = req.session.get('currentUser');
     if (!user) {
       res.statusCode = 401;

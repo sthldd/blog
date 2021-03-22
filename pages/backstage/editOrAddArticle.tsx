@@ -95,6 +95,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
   const  onFinish = (values: atricleType) => {
     if(!editroVal)return message.error('请输入文章内容')
     values.createdAt = moment(values.createdAt).toISOString()
+    console.log(editroHtmlVal,'editroHtmlValeditroHtmlVal');
     values.content = editroVal
     values.htmlContent = editroHtmlVal
     if(id){
@@ -120,7 +121,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
         data: values
       }) .then(() => {
         message.success('添加成功')
-        //router.back()
+        router.back()
       })
     }
   }
