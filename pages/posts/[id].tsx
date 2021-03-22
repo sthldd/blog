@@ -82,7 +82,6 @@ const postsShow: NextPage<Props> = (props) => {
       <ReactAudioPlayer
         id="musicplayer"
         //@ts-ignore
-        controls
         ref={(element) => { audioRef = element; }}
         src={musicList[currentSrcIndex]}
         autoPlay
