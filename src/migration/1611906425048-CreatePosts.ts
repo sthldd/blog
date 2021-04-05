@@ -12,6 +12,7 @@ export class CreatePosts1611906425048 implements MigrationInterface {
                 {name:'htmlContent',type:'text'},
                 {name:'author_id',type:'int'},
                 {name:'tagId',type:'int'},
+                {name:'status',type:'boolean',default:false},
             ]
         }))
     }

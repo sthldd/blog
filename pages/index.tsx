@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const page = parseInt(query.page?.toString()) || 1
   const perpage = 5
   //findAndCount 找到并返回总数量
-  const [posts,count] = await connection.manager.findAndCount(Post,{skip:(page - 1) * perpage,take:perpage})
+  const [posts,count] = await connection.manager.findAndCount(Post,{skip:(page - 1) * perpage,take:perpage,where:{status:true}})
   return {
     props: {
       posts:JSON.parse(JSON.stringify(posts)),

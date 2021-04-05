@@ -4,7 +4,8 @@ type Post  = {
   date:string;
   content:string;
   htmlContent:string;
-  createdAt:string
+  createdAt:string;
+  status:boolean
 }
 
 type articleType = {

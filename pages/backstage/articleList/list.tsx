@@ -4,7 +4,7 @@ import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import { Post } from 'src/entity/Post';
 import qs from 'querystring';
-import {Button, message, Modal, Table} from 'antd'
+import {Button, message, Modal, Table,Switch} from 'antd'
 import dayjs from 'dayjs';
 import {useState} from 'react';
 import { useRouter } from 'next/router'
@@ -13,7 +13,10 @@ import request from '../../../utils/request';
 
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
-  const {posts} = props;
+  const {posts,user} = props;
+  if(!user || !user.id){
+    router.push('/sign_up')
+  }
   const columns = [
     {
       title: '文章ID',
@@ -50,6 +53,13 @@ const List: NextPage<articleType> = (props) => {
       render: (text: dayjs.ConfigType) => text ? dayjs(text).format('YYYY-MM-DD HH:ss:mm') : '--'
     },
     {
+      title: '更新时间',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      align:'center',
+      render: (text: dayjs.ConfigType,record:Post) => <Switch defaultChecked={record.status} onChange={(e)=>onChange(e,record.id)} />
+    },
+    {
       title: '操作',
       key: 'operation',
       align:'center',
@@ -64,6 +74,18 @@ const List: NextPage<articleType> = (props) => {
     }
   ]
 
+  const onChange = (status:boolean,id:number) =>{
+    request({
+      url:'/api/v1/updateStatus',
+      method:'patch',
+      data:{
+        status,
+        id
+      }
+    }) .then(() => {
+      message.success('状态改变成功')
+    })
+  }
   const onEditItem = (id:number) =>{
     router.push(`/backstage/editOrAddArticle?id=${id}`)
   }
@@ -102,6 +124,7 @@ const List: NextPage<articleType> = (props) => {
 export default List;
 
 export const getServerSideProps: GetServerSideProps = withSession( async (context:GetServerSidePropsContext) => {
+  const user = context.req.session.get('currentUser') || {}
   const connection = await getDatabaseConnection()// 第一次链接能不能用 get
   const index = context.req.url.indexOf('?')
   const search = context.req.url.substring(index+1)
@@ -118,7 +141,8 @@ export const getServerSideProps: GetServerSideProps = withSession( async (contex
       count,
       pageNum:page,
       perpage,
-      totalPage:Math.ceil(count / page)
+      totalPage:Math.ceil(count / page),
+      user:JSON.parse(JSON.stringify(user)),
     }
   };
  })

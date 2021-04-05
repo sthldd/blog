@@ -1,44 +1,78 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
-import {useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import axios, {AxiosError, AxiosResponse} from 'axios';
-import { useForm } from 'hooks/useForm';
 import { withSession } from 'lib/withSession';
+import { Input,Form,Button, message } from 'antd';
+import   '../styles/sign_in.less'
+import { useRouter } from 'next/router';
 
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 const SignUp: NextPage = () => {
-
+  const initFormData =  {  username: '',password: '',passwordConfirmation: ''}
+  const router = useRouter()
   const onSubmit = (formData:typeof initFormData) => {
     axios.post(`/api/v1/users`, formData)
       .then(() => {
-        window.alert('注册成功')
-        window.location.href = '/sign_in'
+        message.success('注册成功')
+        router.push('/sign_in')
       }, (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
-            setErrors(response.data);
+            for(let key in response.data){
+              if(response.data[key].length > 0){
+                message.error(response.data[key][0])
+              }
+            }
           }
         }
       });
   }
 
-  const initFormData =  {  username: '1234',password: '567',passwordConfirmation: '567'}
-  const {form,setErrors} = useForm({
-      initFormData,
-      fields:[
-        {label:'用户名',type:'text',key:'username'},
-        {label:'密码',type:'password',key:'password'},
-        {label:'确认密码',type:'password',key:'passwordConfirmation'}
-      ],
-      onSubmit,
-      buttons:<button type="submit">注册</button>
-    }
-  )
+
 
   return (
-    <>
-      <h1>注册</h1>
-      {form}
-    </>
+    <div className='login_modal_container'>
+      <Form
+        {...layout}
+        name="basic"
+        onFinish={onSubmit}
+      >
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: '请输入用户名' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: '请输入密码' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label="Password"
+        name="passwordConfirmation"
+        rules={[{ required: true, message: '请重复输入密码' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          注册
+        </Button>
+      </Form.Item>
+    </Form>
+    </div>
   );
 };
 

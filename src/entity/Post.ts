@@ -10,6 +10,8 @@ export class Post {
   title: string;
   @Column('text')
   content:string;
+  @Column('boolean')
+  status:boolean;
   @Column('text')
   htmlContent:string;
   @Column('int')
