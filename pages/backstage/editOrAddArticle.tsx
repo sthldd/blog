@@ -7,9 +7,9 @@ import { Post } from 'src/entity/Post';
 import MarkdownIt from 'markdown-it'
 import dynamic from "next/dynamic";
 import emoji from 'markdown-it-emoji'
-//@ts-ignore
+
 import subscript from 'markdown-it-sub'
-//@ts-ignore
+
 import superscript from 'markdown-it-sup'
 //@ts-ignore
 import footnote from 'markdown-it-footnote'
@@ -72,10 +72,8 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     linkify: true,
     typographer: true,
     highlight: function (str, lang) {
-      //@ts-ignore
       if (lang && hljs && hljs.getLanguage(lang)) {
         try {
-          //@ts-ignore
           return hljs.highlight(lang, str).value
         } catch (__) {}
       }
@@ -171,7 +169,6 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
           <MdEditor
             value={editroVal}
             style={{ height: "70vh" }}
-            //@ts-ignore
             onChange={setVal}
             config={{
               view: {
