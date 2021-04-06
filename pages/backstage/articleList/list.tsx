@@ -13,9 +13,12 @@ import request from '../../../utils/request';
 
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
+  //@ts-ignore
   const {posts,user} = props;
   if(!user || !user.id){
-    router.push('/sign_up')
+    if(typeof window !== 'undefined'){
+      window.location.href = '/sign_up'
+    }
   }
   const columns = [
     {
@@ -53,11 +56,11 @@ const List: NextPage<articleType> = (props) => {
       render: (text: dayjs.ConfigType) => text ? dayjs(text).format('YYYY-MM-DD HH:ss:mm') : '--'
     },
     {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
+      title: '发布状态',
+      dataIndex: 'status',
+      key: 'status',
       align:'center',
-      render: (text: dayjs.ConfigType,record:Post) => <Switch defaultChecked={record.status} onChange={(e)=>onChange(e,record.id)} />
+      render: (text: boolean,record:Post) => <Switch defaultChecked={text} onChange={(e)=>onChange(e,record.id)} />
     },
     {
       title: '操作',
@@ -124,6 +127,7 @@ const List: NextPage<articleType> = (props) => {
 export default List;
 
 export const getServerSideProps: GetServerSideProps = withSession( async (context:GetServerSidePropsContext) => {
+  //@ts-ignore
   const user = context.req.session.get('currentUser') || {}
   const connection = await getDatabaseConnection()// 第一次链接能不能用 get
   const index = context.req.url.indexOf('?')

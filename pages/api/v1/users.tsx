@@ -16,7 +16,7 @@ const Users: NextApiHandler = async (req, res) => {
   const found = await connection.manager.find(User,{where:{createdAt:BetweenDates()}});
   if(found){
     const deal = JSON.parse(JSON.stringify(found))
-    if(deal.length >= 2){
+    if(deal.length >= 12){
       res.statusCode = 422 //无法处理的实体 语法和数据都对 但是我就是接受不了
       res.write(JSON.stringify('一天只能注册两个'))
       res.end();
