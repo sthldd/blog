@@ -152,6 +152,7 @@ export default List
 
 export const getServerSideProps: GetServerSideProps = withSession(
   async (context: GetServerSidePropsContext) => {
+    //@ts-ignore
     const user = context.req.session.get('currentUser') || {}
     const connection = await getDatabaseConnection() // 第一次链接能不能用 get
     const index = context.req.url.indexOf('?')
