@@ -12,9 +12,12 @@ import Link from 'next/link'
 
 const List: NextPage<articleType> = (props) => {
   const router = useRouter()
-  const { posts, user } = props
-  if (!user || !user.id) {
-    router.push('/sign_up')
+  //@ts-ignore
+  const {posts,user} = props;
+  if(!user || !user.id){
+    if(typeof window !== 'undefined'){
+      window.location.href = '/sign_up'
+    }
   }
   const columns = [
     {
@@ -54,16 +57,11 @@ const List: NextPage<articleType> = (props) => {
         text ? dayjs(text).format('YYYY-MM-DD HH:ss:mm') : '--',
     },
     {
-      title: '开启文章',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      align: 'center',
-      render: (text: dayjs.ConfigType, record: Post) => (
-        <Switch
-          defaultChecked={record.status}
-          onChange={(e) => onChange(e, record.id)}
-        />
-      ),
+      title: '发布状态',
+      dataIndex: 'status',
+      key: 'status',
+      align:'center',
+      render: (text: boolean,record:Post) => <Switch defaultChecked={text} onChange={(e)=>onChange(e,record.id)} />
     },
     {
       title: '操作',

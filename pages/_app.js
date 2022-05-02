@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
       <title>記</title>
       <meta name="viewport"
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css"></link>
+      <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.6.0/styles/default.min.css"></link>
     </Head>
 
   {
@@ -78,7 +78,7 @@ function MyApp({ Component, pageProps }) {
             } */}
           </Layout>
       </Layout>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
     </>
   }
     </>

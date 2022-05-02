@@ -25,11 +25,7 @@ const SignUp: NextPage = () => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
-            for(let key in response.data){
-              if(response.data[key].length > 0){
-                message.error(response.data[key][0])
-              }
-            }
+              message.error(typeof response.data === 'string' ? response.data : '不太行')
           }
         }
       });

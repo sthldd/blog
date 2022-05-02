@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Button,Form, Input, Select ,DatePicker, message, Upload} from 'antd';
-import { GetServerSideProps, GetServerSidePropsContext, NextComponentType, NextPage } from 'next';
+import {Button,Form, Input, Select ,DatePicker, message} from 'antd';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { getDatabaseConnection } from 'lib/getDatabaseConnection';
 import { withSession } from 'lib/withSession';
 import { Post } from 'src/entity/Post';
@@ -59,7 +59,7 @@ const tailLayout = {
 const EditOrAddArticle:NextPage<Props>  = (props) =>{
   const router = useRouter()
   const editorRef = useRef(null);
-  const {post:{title,createdAt,content,id,tagId},status,tagList} = props;
+  const {post:{title,createdAt,content,id,tagId,htmlContent},status,tagList} = props;
   const [editroVal,setEditroVal] = useState<any>('')
   const [editroHtmlVal,setEditroHtmlVal] = useState<string>('')
   useEffect(()=>{
@@ -95,9 +95,8 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
   const  onFinish = (values: atricleType) => {
     if(!editroVal)return message.error('请输入文章内容')
     values.createdAt = moment(values.createdAt).toISOString()
-    console.log(editroHtmlVal,'editroHtmlValeditroHtmlVal');
     values.content = editroVal
-    values.htmlContent = editroHtmlVal
+    values.htmlContent = editroHtmlVal || htmlContent
     if(id){
       values.id = id
     }else{
@@ -173,7 +172,6 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
           <MdEditor
             value={editroVal}
             style={{ height: "70vh" }}
-            //@ts-ignore
             onChange={setVal}
             config={{
               view: {

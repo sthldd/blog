@@ -71,7 +71,7 @@ const TagsList: NextPage<tagType> = (props) => {
           return (
               <>
                   <Button  type="primary" onClick={() => onEditItem(record)}>编辑</Button>
-                  <Button  danger  onClick={() => deleteItem(record.id)}>删除</Button>
+                  <Button  danger  type="primary" style={{marginLeft:'10px'}} onClick={() => deleteItem(record.id)}>删除</Button>
               </>
           )
       }
