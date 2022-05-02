@@ -1,6 +1,6 @@
 import { Layout, Menu } from 'antd';
 const { Header  } = Layout
-
+import  './LayoutHeader.less'
 
 export const LayoutHeader:React.FC= (props) =>{
   return(

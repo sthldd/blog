@@ -13,12 +13,15 @@ function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter()
   const router = useRouter()
 
+  const routerList = {
+    '1':'/backstage/articleList/list',
+    '2':'/backstage/tagsList',
+    // '3':'/backstage/webSite',
+    //'4':'/backstage/articleList/list',
+  }
+
   const handleOk = (key) =>{
-    if(key.key === '1'){
-      router.push('/backstage/articleList/list')
-    }else{
-    router.push('/backstage/tagsList')
-    }
+    router.push(routerList[key])
   }
 
   const match = (path) =>{
@@ -61,6 +64,7 @@ function MyApp({ Component, pageProps }) {
               >
               <Menu.Item key="1" >文章列表</Menu.Item>
               <Menu.Item key="2" >标签列表</Menu.Item>
+              {/* <Menu.Item key="3" >网站配置</Menu.Item> */}
             </Menu>
           </Sider>
           <Layout>
@@ -68,7 +72,10 @@ function MyApp({ Component, pageProps }) {
             <Content style={{ margin: '24px 16px 0' }}>
               <Component {...pageProps} />
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            {/* {
+              location ? location.href.includes('articleList/list') && 
+              <Footer className="footer_content">痛  太痛了</Footer>
+            } */}
           </Layout>
       </Layout>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>

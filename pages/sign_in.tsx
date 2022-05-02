@@ -18,7 +18,7 @@ const tailLayout = {
 const SignIn: NextPage<{user:User}> = (props) => {
   const initFormData =  {  username: '',password: '',}
   const router = useRouter()
-
+  
   const onSubmit =(formData:typeof initFormData) => {
     axios.post(`/api/v1/sessions`, formData)
       .then(() => {

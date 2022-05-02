@@ -32,6 +32,7 @@ const Index: NextPage<articleType> = (props) => {
       <footer>
         {pager}
       </footer>
+      <a href="mailto:sample@fly63.com?subject=test&cc=sample@hotmail.com&subject=主题&body=内容">send mail</a>
     </div>
   );
 };

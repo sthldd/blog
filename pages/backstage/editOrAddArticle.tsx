@@ -100,6 +100,8 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
     values.htmlContent = editroHtmlVal
     if(id){
       values.id = id
+    }else{
+      values.tagId = Math.ceil(Math.random() * 1000000)
     }
     postData(values)
   };
@@ -165,7 +167,7 @@ const EditOrAddArticle:NextPage<Props>  = (props) =>{
           </Select>
         </Form.Item>
         <Form.Item name="createdAt" label="发布时间" rules={[{ required: true }]}>
-          <DatePicker   showTime/>
+          <DatePicker  placeholder="请选择发布时间" showTime/>
         </Form.Item>
         <Form.Item  label="文章" rules={[{ required: true }]}>
           <MdEditor

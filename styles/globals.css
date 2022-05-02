@@ -21,3 +21,13 @@ h2{
   font: bold 25px/1.1 ff-tisa-web-pro,Cambria,"Times New Roman",Georgia,Times,sans-serif;
   font-weight: 500;
 }
+.footer_content{
+  z-index: 0;
+  color: black;
+  animation: scale 2s infinite;
+  text-align: center;
+}
+@keyframes scale{
+  0%{font-size: 14px;}
+  100%{font-size: 30px;} 
+}

@@ -5,6 +5,8 @@ import { Post } from 'src/entity/Post';
 import PageHeader from 'hooks/useHeader';
 import dayjs from 'dayjs';
 import ReactAudioPlayer from 'react-audio-player';
+import '../../styles/home.less'
+import { message } from 'antd'
 
 var musicList = [
   'https://sthl-1256208836.cos.ap-shanghai.myqcloud.com/music/%E8%AE%B8%E5%B5%A9%20-%20%E5%8D%97%E5%B1%B1%E5%BF%86.mp3',
@@ -17,10 +19,16 @@ const postsShow: NextPage<Props> = (props) => {
   const {post} = props;
   const [audioStatus,setAudioStatus] = useState<boolean>(true)
   const [currentSrcIndex,setCurrentSrcIndex] = useState<number>(0)
+  const [isFormHome,setIsFormHome] = useState<boolean>(true)
   let audioRef = useRef<HTMLInputElement>()
-
+  useEffect(()=>{
+    message.success('本页面稍后会自动播放许嵩-南山忆，可以点击文章旁边的按钮来关闭')
+  },[])
 
   useEffect(() => {
+    if(document && document.referrer && document.referrer.includes('articleList/list')){
+      setIsFormHome(false)
+    }
     window.addEventListener('click', handleScroll);
     return () => window.removeEventListener('click', handleScroll);
   });
@@ -70,7 +78,9 @@ const postsShow: NextPage<Props> = (props) => {
   }
   return (
     <div  className="container">
-      <PageHeader />
+      {
+        isFormHome && <PageHeader />
+      }
       <div className="article-title-wrapper">
         <h1>{post.title}</h1>
         <div className="logo-wrapper" onClick={(e)=>audioHandle(e)}>
