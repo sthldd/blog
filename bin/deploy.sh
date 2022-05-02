@@ -1,5 +1,5 @@
 docker start distracted_buck &&
-cd /home/blog/app/ &&
+cd /home/blog/app/blog &&
 git pull &&
 yarn install --production=false &&
 yarn build &&
